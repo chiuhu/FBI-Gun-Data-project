@@ -1,0 +1,961 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{FBI Gun Data}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Smoking Gun? : Re-examining the relationship between FBI
+background checks and state-level census
+data}\label{smoking-gun-re-examining-the-relationship-between-fbi-background-checks-and-state-level-census-data}
+
+\subsection{Table of Contents}\label{table-of-contents}
+
+Introduction
+
+Tools
+
+Data Wrangling
+
+Exploratory Data Analysis
+
+Conclusions
+
+     \#\# Introduction
+
+In this report, I will be exploring what census data tells us about gun
+purchases across the US. The gun data comes from from the FBI's National
+Instant Criminal Background Check System. The NICS is used by to
+determine whether a prospective buyer is eligible to buy firearms or
+explosives. Gun shops call into this system to ensure that each customer
+does not have a criminal record or isn't otherwise ineligible to make a
+purchase. The state level cenus data comes from
+\href{https://www.census.gov}{census.gov}.
+
+I downloaded the NICS data in .xlxs format from the
+\href{https://docs.google.com/document/d/e/2PACX-1vTlVmknRRnfy_4eTrjw5hYGaiQim5ctr9naaRd4V9du2B5bxpd8FEH3KtDgp8qVekw7Cj1GLk1IXdZi/pub?embedded=True}{Udacity
+project site} and used Excel to save it as a csv file so that I could
+use pandas to manipulate it. The census data was already in .csv format
+so this step was unneccesary. I combined the two files to one csv to
+make working with them easier.
+
+For this project, I wanted to answer the questions that are listed
+below:
+
+\begin{verbatim}
+<li> Which kinds of guns are people applying permits for? </li>
+<li> How does redemption data compare between the types of firearms overall? </li>
+<li> How does the percentage of people with Bachelor's degree affect permit applications? </li>
+<li> To Shoot or to Build: Comparing Business permits vs Firearm permits </li>
+<li> Which states have had the highest growth in gun registrations? </li>
+\end{verbatim}
+
+     \#\# Tools
+
+I used pandas and numpy to make working with the .csv's easier and more
+efficient. I also used matplotlib to plot graphs showing the
+relationships between the various variables and added seaborn to make
+the graphs visually appealing. All plots appeared inline to make working
+with the data quick and presentable in report form.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{datetime} \PY{k}{as} \PY{n+nn}{dt}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        \PY{o}{\PYZpc{}} \PY{n}{matplotlib} \PY{n}{inline}
+\end{Verbatim}
+
+
+     \#\# Data Wrangling
+
+In this section of the report, I loaded in the data from the csv
+documents, checked for cleanliness, and then trimmed and cleaned the
+dataset for analysis. Cleaning decisions I made are explained in the
+cells adjacent to the code.
+
+\subsubsection{General Properties of the
+dataset}\label{general-properties-of-the-dataset}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{}Read in the csv files}
+        \PY{n}{census\PYZus{}data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{census.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} 
+        \PY{n}{gun\PYZus{}data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gun\PYZus{}data.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{}Print out first rows of data frame to make sure the data was read in correctly}
+        \PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:}                                                 Fact Fact Note    Alabama  \textbackslash{}
+        0       Population estimates, July 1, 2016,  (V2016)       NaN    4863300   
+        1  Population estimates base, April 1, 2010,  (V2{\ldots}       NaN  4,780,131   
+        2  Population, percent change - April 1, 2010 (es{\ldots}       NaN      1.70\%   
+        3                  Population, Census, April 1, 2010       NaN  4,779,736   
+        4  Persons under 5 years, percent, July 1, 2016, {\ldots}       NaN      6.00\%   
+        
+            Alaska    Arizona   Arkansas  California   Colorado Connecticut Delaware  \textbackslash{}
+        0   741894    6931071    2988248    39250017    5540545     3576452   952065   
+        1  710,249  6,392,301  2,916,025  37,254,522  5,029,324   3,574,114  897,936   
+        2    4.50\%      8.40\%      2.50\%       5.40\%     10.20\%       0.10\%    6.00\%   
+        3  710,231  6,392,017  2,915,918  37,253,956  5,029,196   3,574,097  897,934   
+        4    7.30\%      6.30\%      6.40\%       6.30\%      6.10\%       5.20\%    5.80\%   
+        
+            {\ldots}    South Dakota Tennessee       Texas       Utah  Vermont   Virginia  \textbackslash{}
+        0   {\ldots}          865454   6651194    27862596    3051217   624594    8411808   
+        1   {\ldots}          814195   6346298  25,146,100  2,763,888  625,741  8,001,041   
+        2   {\ldots}           0.063     0.048      10.80\%     10.40\%   -0.20\%      5.10\%   
+        3   {\ldots}          814180   6346105  25,145,561  2,763,885  625,741  8,001,024   
+        4   {\ldots}           0.071     0.061       7.20\%      8.30\%    4.90\%      6.10\%   
+        
+          Washington West Virginia  Wisconsin  Wyoming  
+        0    7288000       1831102    5778708   585501  
+        1  6,724,545     1,853,011  5,687,289  563,767  
+        2      8.40\%        -1.20\%      1.60\%    3.90\%  
+        3  6,724,540     1,852,994  5,686,986  563,626  
+        4      6.20\%         5.50\%      5.80\%    6.50\%  
+        
+        [5 rows x 52 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:}      month       state   permit  permit\_recheck  handgun  long\_gun   other  \textbackslash{}
+        0  2017-09     Alabama  16717.0             0.0   5734.0    6320.0   221.0   
+        1  2017-09      Alaska    209.0             2.0   2320.0    2930.0   219.0   
+        2  2017-09     Arizona   5069.0           382.0  11063.0    7946.0   920.0   
+        3  2017-09    Arkansas   2935.0           632.0   4347.0    6063.0   165.0   
+        4  2017-09  California  57839.0             0.0  37165.0   24581.0  2984.0   
+        
+           multiple  admin  prepawn\_handgun   {\ldots}    returned\_other  rentals\_handgun  \textbackslash{}
+        0       317    0.0             15.0   {\ldots}               0.0              0.0   
+        1       160    0.0              5.0   {\ldots}               0.0              0.0   
+        2       631    0.0             13.0   {\ldots}               0.0              0.0   
+        3       366   51.0             12.0   {\ldots}               0.0              0.0   
+        4         0    0.0              0.0   {\ldots}               0.0              0.0   
+        
+           rentals\_long\_gun  private\_sale\_handgun  private\_sale\_long\_gun  \textbackslash{}
+        0               0.0                   9.0                   16.0   
+        1               0.0                  17.0                   24.0   
+        2               0.0                  38.0                   12.0   
+        3               0.0                  13.0                   23.0   
+        4               0.0                   0.0                    0.0   
+        
+           private\_sale\_other  return\_to\_seller\_handgun  return\_to\_seller\_long\_gun  \textbackslash{}
+        0                 3.0                       0.0                        0.0   
+        1                 1.0                       0.0                        0.0   
+        2                 2.0                       0.0                        0.0   
+        3                 0.0                       0.0                        2.0   
+        4                 0.0                       0.0                        0.0   
+        
+           return\_to\_seller\_other  totals  
+        0                     3.0   32019  
+        1                     0.0    6303  
+        2                     0.0   28394  
+        3                     1.0   17747  
+        4                     0.0  123506  
+        
+        [5 rows x 27 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{}What does the data look like}
+        \PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} (85, 52)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} (12485, 27)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{}What are the summary statistics}
+        \PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+        \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \subsubsection{Data Cleaning}\label{data-cleaning}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{}Drop columns in gun\PYZus{}data that aren\PYZsq{}t relevant to the questions I am trying to answer and print head to confirm that drop happened}
+        \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{permit\PYZus{}recheck}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{multiple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{admin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{prepawn\PYZus{}handgun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{prepawn\PYZus{}long\PYZus{}gun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{prepawn\PYZus{}other}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{redemption\PYZus{}other}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{returned\PYZus{}handgun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{returned\PYZus{}long\PYZus{}gun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{returned\PYZus{}other}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rentals\PYZus{}handgun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rentals\PYZus{}long\PYZus{}gun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{private\PYZus{}sale\PYZus{}handgun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{private\PYZus{}sale\PYZus{}long\PYZus{}gun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{private\PYZus{}sale\PYZus{}other}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{return\PYZus{}to\PYZus{}seller\PYZus{}handgun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{return\PYZus{}to\PYZus{}seller\PYZus{}long\PYZus{}gun}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{return\PYZus{}to\PYZus{}seller\PYZus{}other}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{totals}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{}Confirm that data was successfully dropped}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:}      month       state   permit  handgun  long\_gun   other  \textbackslash{}
+        0  2017-09     Alabama  16717.0   5734.0    6320.0   221.0   
+        1  2017-09      Alaska    209.0   2320.0    2930.0   219.0   
+        2  2017-09     Arizona   5069.0  11063.0    7946.0   920.0   
+        3  2017-09    Arkansas   2935.0   4347.0    6063.0   165.0   
+        4  2017-09  California  57839.0  37165.0   24581.0  2984.0   
+        
+           redemption\_handgun  redemption\_long\_gun  
+        0              1378.0               1262.0  
+        1               200.0                154.0  
+        2              1474.0                748.0  
+        3              1296.0               1824.0  
+        4               535.0                397.0  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}117}]:} \PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{c+c1}{\PYZsh{}Convert month to datetime object}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{}Drop columns in census that aren\PYZsq{}t relevant to my questions}
+         \PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fact Note}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{c+c1}{\PYZsh{} Drop the Fact Note Column since I don\PYZsq{}t need it}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)} \PY{c+c1}{\PYZsh{} Check that Fact Note was indeed dropped}
+         \PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{set\PYZus{}index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fact}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)} \PY{c+c1}{\PYZsh{}Reset Index to Fact}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{}Make tuple of rows I want to keep for comparison}
+         \PY{n}{census\PYZus{}data\PYZus{}list} \PY{o}{=} \PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,}\PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{29}\PY{p}{]}\PY{p}{,}\PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{35}\PY{p}{]}\PY{p}{,}\PY{n}{census\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{l+m+mi}{47}\PY{p}{]} 
+         \PY{n}{census\PYZus{}data\PYZus{}list} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame} \PY{p}{(}\PY{n+nb}{list}\PY{p}{(}\PY{n}{census\PYZus{}data\PYZus{}list}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} Convert tuple to dataframe }
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}64}]:} \PY{c+c1}{\PYZsh{}Output the resulting dataframe to check that desired columns remained}
+         \PY{n}{census\PYZus{}data\PYZus{}list}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}64}]:}                                                     Alabama  Alaska  Arizona  \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)        4863300  741894  6931071   
+         Building permits, 2016                                15001    1503    35578   
+         Bachelor's degree or higher, percent of persons{\ldots}    0.235    0.28    0.275   
+         Median household income (in 2015 dollars), 2011{\ldots}    43623   72515    50255   
+         
+                                                            Arkansas California  \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)        2988248   39250017   
+         Building permits, 2016                                 9474     102350   
+         Bachelor's degree or higher, percent of persons{\ldots}    0.211      0.314   
+         Median household income (in 2015 dollars), 2011{\ldots}    41371      61818   
+         
+                                                            Colorado Connecticut  \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)        5540545     3576452   
+         Building permits, 2016                                38974        5504   
+         Bachelor's degree or higher, percent of persons{\ldots}    0.381       0.376   
+         Median household income (in 2015 dollars), 2011{\ldots}    60629       70331   
+         
+                                                            Delaware   Florida  \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)         952065  20612439   
+         Building permits, 2016                                 5804    116240   
+         Bachelor's degree or higher, percent of persons{\ldots}      0.3     0.273   
+         Median household income (in 2015 dollars), 2011{\ldots}    60509     47507   
+         
+                                                              Georgia   {\ldots}    \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)        10310371   {\ldots}     
+         Building permits, 2016                                 51675   {\ldots}     
+         Bachelor's degree or higher, percent of persons{\ldots}     0.288   {\ldots}     
+         Median household income (in 2015 dollars), 2011{\ldots}     49620   {\ldots}     
+         
+                                                            South Dakota Tennessee  \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)             865454   6651194   
+         Building permits, 2016                                     5686     36157   
+         Bachelor's degree or higher, percent of persons{\ldots}         0.27     0.249   
+         Median household income (in 2015 dollars), 2011{\ldots}        50957     45219   
+         
+                                                                Texas     Utah Vermont  \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)        27862596  3051217  624594   
+         Building permits, 2016                                165853    22662    1771   
+         Bachelor's degree or higher, percent of persons{\ldots}     0.276    0.311    0.36   
+         Median household income (in 2015 dollars), 2011{\ldots}     53207    60727   55176   
+         
+                                                            Virginia Washington  \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)        8411808    7288000   
+         Building permits, 2016                                31132      44077   
+         Bachelor's degree or higher, percent of persons{\ldots}    0.363      0.329   
+         Median household income (in 2015 dollars), 2011{\ldots}    65015      61062   
+         
+                                                            West Virginia Wisconsin  \textbackslash{}
+         Population estimates, July 1, 2016,  (V2016)             1831102   5778708   
+         Building permits, 2016                                      2544     19274   
+         Bachelor's degree or higher, percent of persons{\ldots}         0.192     0.278   
+         Median household income (in 2015 dollars), 2011{\ldots}         41751     53357   
+         
+                                                            Wyoming  
+         Population estimates, July 1, 2016,  (V2016)        585501  
+         Building permits, 2016                                1727  
+         Bachelor's degree or higher, percent of persons{\ldots}   0.257  
+         Median household income (in 2015 dollars), 2011{\ldots}   58840  
+         
+         [4 rows x 50 columns]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}65}]:} \PY{c+c1}{\PYZsh{} Transpose dataframe so that we can easily compare dataframes with the gun\PYZus{}data dataframe }
+         \PY{c+c1}{\PYZsh{} since state data will now be in the first column }
+         \PY{n}{census\PYZus{}data\PYZus{}list} \PY{o}{=} \PY{n}{census\PYZus{}data\PYZus{}list}\PY{o}{.}\PY{n}{transpose}\PY{p}{(}\PY{p}{)}
+         \PY{n}{census\PYZus{}data\PYZus{}list}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)} 
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}65}]:}            Population estimates, July 1, 2016,  (V2016)  \textbackslash{}
+         Alabama                                         4863300   
+         Alaska                                           741894   
+         Arizona                                         6931071   
+         Arkansas                                        2988248   
+         California                                     39250017   
+         
+                    Building permits, 2016  \textbackslash{}
+         Alabama                     15001   
+         Alaska                       1503   
+         Arizona                     35578   
+         Arkansas                     9474   
+         California                 102350   
+         
+                    Bachelor's degree or higher, percent of persons age 25 years+, 2011-2015  \textbackslash{}
+         Alabama                                                 0.235                         
+         Alaska                                                   0.28                         
+         Arizona                                                 0.275                         
+         Arkansas                                                0.211                         
+         California                                              0.314                         
+         
+                    Median household income (in 2015 dollars), 2011-2015  
+         Alabama                                                 43623    
+         Alaska                                                  72515    
+         Arizona                                                 50255    
+         Arkansas                                                41371    
+         California                                              61818    
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{c+c1}{\PYZsh{}Check shape to make sure all 50 states show up in our dataframe}
+         \PY{n}{census\PYZus{}data\PYZus{}list}\PY{o}{.}\PY{n}{shape}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} (50, 4)
+\end{Verbatim}
+            
+     \#\# Exploratory Data Analysis
+
+Now that the data is trimmed and cleaned, I move on to the exploration.
+In the following section, I compute statistics and create visualizations
+to address the research questions posed in the Introduction section.
+
+    \subsubsection{What kinds of guns are people applying permits
+for?}\label{what-kinds-of-guns-are-people-applying-permits-for}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}121}]:} \PY{c+c1}{\PYZsh{}I get the specific columns for hand guns and long guns from the gun\PYZus{}data dataframe}
+          \PY{n}{perm\PYZus{}h} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]} \PY{c+c1}{\PYZsh{}handguns}
+          \PY{n}{perm\PYZus{}l} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]} \PY{c+c1}{\PYZsh{}long\PYZus{}guns}
+          \PY{n}{z\PYZus{}time} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]} \PY{c+c1}{\PYZsh{}time variable}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}124}]:} \PY{c+c1}{\PYZsh{}I make a plot of hand\PYZus{}guns over time and long\PYZus{}guns over time on the same graph to compare the trend}
+          \PY{n}{first} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{z\PYZus{}time}\PY{p}{,}\PY{n}{perm\PYZus{}h}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{}handguns vs permits for each state}
+          \PY{n}{second} \PY{o}{=} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{z\PYZus{}time}\PY{p}{,}\PY{n}{perm\PYZus{}l}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha} \PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{)} \PY{c+c1}{\PYZsh{}long\PYZus{}guns vs permits for each state}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of Permits}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hand gun vs long gun permits over time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_24_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    From the mixed plot above, we can see that the permits for both guns
+appear to be cyclical. This could be partly explained by the seasonality
+of most of the regions. As an example, most people would not be using
+guns outside during the winter or outside of hunting season. People
+would still be purchasing firearms for protection or indoor shooting, so
+the rate would not fall to zero. On average, it appears that most people
+in the different states are applying for more permits to own long guns
+than they do for regular hand guns. The general trend for permit
+applications appears to be increasing for both types of firearms.
+
+    \subsubsection{How does redemption data compare between the types of
+firearms
+overall?}\label{how-does-redemption-data-compare-between-the-types-of-firearms-overall}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{c+c1}{\PYZsh{}Select hand guns and long guns columns from dataframe}
+         \PY{n}{red\PYZus{}h} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{6}\PY{p}{]} \PY{c+c1}{\PYZsh{}redemption\PYZus{}handgun}
+         \PY{n}{red\PYZus{}l} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]} \PY{c+c1}{\PYZsh{}redemption longgun}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{c+c1}{\PYZsh{}PLot a pie chart to show the distribution}
+         \PY{n}{data} \PY{o}{=} \PY{p}{[}\PY{n}{red\PYZus{}h}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{red\PYZus{}l}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{p}{]}
+         \PY{n}{labels} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Handgun redemption}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Longgun redemption}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{pie}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{autopct}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{}1.1f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{labels}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{axis} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pie chart showing proportion of firearm redemption}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_28_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    More people redeem long guns than they do handguns which is inline with
+the type of permits they are applying for as we saw in the previous
+question. There appears to be an overwhelming amount of longgun
+redemption so we might want to look at the data and see why this number
+is so disproportional.
+
+    \subsubsection{How does the percentage of people with Bachelor's degree
+affect permit
+applications?}\label{how-does-the-percentage-of-people-with-bachelors-degree-affect-permit-applications}
+
+    The data from the gun\_file has data for multiple years but the census
+data file only has a snapshot from certain timeperiods, I will take the
+population estimates from 2016 and compare that with gun data for the
+average of 2016 data
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{c+c1}{\PYZsh{}Mean gun data of 2016 to compare with 2016 Census data}
+         \PY{n}{m\PYZus{}2df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{;} \PY{c+c1}{\PYZsh{}month to dataframe}
+         \PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{m\PYZus{}2df}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{year} \PY{c+c1}{\PYZsh{}make year column}
+         \PY{n}{x} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{2016}\PY{p}{]}\PY{p}{;} \PY{c+c1}{\PYZsh{} Get 2016 data}
+         \PY{n}{gun\PYZus{}summary\PYZus{}df} \PY{o}{=} \PY{n}{x}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{;} \PY{c+c1}{\PYZsh{} Mean of 2016 data by state}
+         \PY{n}{gun\PYZus{}summary\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:}                   permit       handgun      long\_gun         other  \textbackslash{}
+         state                                                                
+         Alabama     24253.250000  12760.250000  10163.583333    508.666667   
+         Alaska        260.083333   3124.250000   3073.916667    240.750000   
+         Arizona      7314.250000  13898.666667   9082.333333   1093.500000   
+         Arkansas     4621.333333   6687.000000   6843.333333    254.916667   
+         California  86415.083333  46696.250000  46212.500000  17642.250000   
+         
+                     redemption\_handgun  redemption\_long\_gun  year  
+         state                                                      
+         Alabama            1669.666667          1474.750000  2016  
+         Alaska              186.166667           170.500000  2016  
+         Arizona            1381.333333           699.166667  2016  
+         Arkansas           1053.750000          1711.000000  2016  
+         California          562.666667           553.750000  2016  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{c+c1}{\PYZsh{}Merge the gun\PYZus{}data dataframe with the census\PYZus{}data\PYZus{}list dataframe and output to confirm merge}
+         \PY{n}{perm\PYZus{}df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{gun\PYZus{}summary\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{permit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+         \PY{n}{summary\PYZus{}df} \PY{o}{=} \PY{n}{census\PYZus{}data\PYZus{}list}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{perm\PYZus{}df}\PY{p}{)}\PY{p}{;}
+         \PY{n}{summary\PYZus{}df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}31}]:}            Population estimates, July 1, 2016,  (V2016)  \textbackslash{}
+         Alabama                                         4863300   
+         Alaska                                           741894   
+         Arizona                                         6931071   
+         Arkansas                                        2988248   
+         California                                     39250017   
+         
+                    Building permits, 2016  \textbackslash{}
+         Alabama                     15001   
+         Alaska                       1503   
+         Arizona                     35578   
+         Arkansas                     9474   
+         California                 102350   
+         
+                    Bachelor's degree or higher, percent of persons age 25 years+, 2011-2015  \textbackslash{}
+         Alabama                                                 0.235                         
+         Alaska                                                   0.28                         
+         Arizona                                                 0.275                         
+         Arkansas                                                0.211                         
+         California                                              0.314                         
+         
+                    Median household income (in 2015 dollars), 2011-2015        permit  
+         Alabama                                                 43623    24253.250000  
+         Alaska                                                  72515      260.083333  
+         Arizona                                                 50255     7314.250000  
+         Arkansas                                                41371     4621.333333  
+         California                                              61818    86415.083333  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{c+c1}{\PYZsh{}Plot percentage college degrees and above vs permit applications in states}
+         \PY{n}{x} \PY{o}{=} \PY{n}{summary\PYZus{}df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{]} \PY{c+c1}{\PYZsh{} College Degrees}
+         \PY{n}{x} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}numeric}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{c+c1}{\PYZsh{}Convert column from object to numeric so that I can plot it}
+         \PY{n}{y} \PY{o}{=} \PY{n}{summary\PYZus{}df}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{;} \PY{c+c1}{\PYZsh{}Permit}
+         
+         \PY{c+c1}{\PYZsh{}Line of best fit with np.ployfit to see relationship}
+         \PY{n}{m}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{polyfit}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{permit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{m}\PY{o}{*}\PY{n}{x} \PY{o}{+}\PY{n}{b}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{regression line}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Number of permits}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{} o}\PY{l+s+s1}{f population with college degrees}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{n}{loc}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Comparing rates of college graduates and gun permit application}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_34_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    From the plot, it appears that as there is a slight negative correlation
+between the percentage of people with college degrees and the permit
+applications in states. States with a higher percentage of college
+graduates appear to apply for a lower number of permits. It appears that
+there is an outlier state that has a high number of permit applications
+even though its proportion of college graduates to that of the general
+population is low.
+
+    \subsubsection{To Shoot or to Build: Comparing Business permits vs
+Firearm
+permits}\label{to-shoot-or-to-build-comparing-business-permits-vs-firearm-permits}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}186}]:} \PY{n}{stack\PYZus{}comp} \PY{o}{=} \PY{n}{summary\PYZus{}df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Building permits, 2016}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{permit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{stacked}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{;}
+          \PY{n}{stack\PYZus{}comp}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{State}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+          \PY{n}{stack\PYZus{}comp}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Permits}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+          \PY{n}{stack\PYZus{}comp}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Comparison of building permits and gun permits}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_37_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}191}]:} \PY{n}{combined\PYZus{}bar} \PY{o}{=} \PY{n}{summary\PYZus{}df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Building permits, 2016}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{permit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{bar}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{stacked}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}\PY{p}{;}
+          \PY{n}{combined\PYZus{}bar}\PY{o}{.}\PY{n}{set\PYZus{}xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Type of Permit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+          \PY{n}{combined\PYZus{}bar}\PY{o}{.}\PY{n}{set\PYZus{}ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Total number of permits}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+          \PY{n}{combined\PYZus{}bar}\PY{o}{.}\PY{n}{set\PYZus{}title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Comparing the types of permits by total amounts}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}191}]:} Text(0.5,1,'Comparing the types of permits by total amounts')
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_38_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    From the above graphs, it is clear that building permits in most states
+edge out gun permits but not by a large amount. In fact, it is
+interesting to note that in a couple of states like Kentucky, the number
+of gun permits far outnumber those of building permits
+
+    \subsubsection{Which states have had the highest growth in gun
+registrations?}\label{which-states-have-had-the-highest-growth-in-gun-registrations}
+
+    For this question, I will look at the average data from 2010 and compare
+it with that from 2017
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}294}]:} \PY{c+c1}{\PYZsh{}Relationship between states and gun permits over time}
+          \PY{n}{x} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{}hand guns vs long guns vs other guns in the states. Here I define the variables}
+          \PY{n}{m\PYZus{}2df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{to\PYZus{}datetime}\PY{p}{(}\PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{month}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{;} \PY{c+c1}{\PYZsh{}month to dataframe}
+          \PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{m\PYZus{}2df}\PY{o}{.}\PY{n}{dt}\PY{o}{.}\PY{n}{year} \PY{c+c1}{\PYZsh{}make year column}
+          \PY{n}{x} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{2012}\PY{p}{]}\PY{p}{;} \PY{c+c1}{\PYZsh{} Get 2012 data}
+          \PY{n}{gun\PYZus{}summary\PYZus{}df} \PY{o}{=} \PY{n}{x}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{;} \PY{c+c1}{\PYZsh{} Mean of 2012 data by state}
+          \PY{n}{perm\PYZus{}2012} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{gun\PYZus{}summary\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{permit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}320}]:} \PY{n}{y} \PY{o}{=} \PY{n}{gun\PYZus{}data}\PY{o}{.}\PY{n}{loc}\PY{p}{[}\PY{n}{gun\PYZus{}data}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{year}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{l+m+mi}{2017}\PY{p}{]}\PY{p}{;}
+          \PY{n}{gun\PYZus{}summary\PYZus{}df} \PY{o}{=} \PY{n}{y}\PY{o}{.}\PY{n}{groupby}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{state}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{)}\PY{p}{;} \PY{c+c1}{\PYZsh{} Mean of 2017 data by state}
+          \PY{n}{perm\PYZus{}2017} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{gun\PYZus{}summary\PYZus{}df}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{permit}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}363}]:} \PY{n}{twodf} \PY{o}{=} \PY{n}{perm\PYZus{}2017}
+          \PY{n}{twodf} \PY{o}{=} \PY{n}{twodf}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{n}{perm\PYZus{}2012}\PY{p}{)}
+          \PY{n}{twodf}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017 Permit Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2012 Permit Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{twodf}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{} G}\PY{l+s+s1}{rowth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{twodf}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2017 Permit Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{n}{twodf}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2012 Permit Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)} \PY{o}{/} \PY{p}{(}\PY{p}{(}\PY{n}{twodf}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2012 Permit Data}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{+}\PY{l+m+mf}{0.01}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)}
+          \PY{n}{twodf}\PY{o}{.}\PY{n}{sort\PYZus{}values}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZpc{} G}\PY{l+s+s1}{rowth}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{ascending}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}363}]:}               2017 Permit Data  2012 Permit Data      \% Growth
+          state                                                         
+          Ohio              12165.888889               0.0  12165.888889
+          Louisiana          2615.111111               0.0   2615.111111
+          South Dakota       1261.666667               0.0   1261.666667
+          Virginia           1011.888889               0.0   1011.888889
+          Maine               721.555556               0.0    721.555556
+\end{Verbatim}
+            
+    The top five states that had the highest growth in gun registration
+were:
+
+\begin{verbatim}
+    <li>Ohio</li>
+    <li>Louisiana</li>
+    <li>South Dakota</li>
+    <li>Virginia</li>
+    <li>Maine</li>
+</ol>
+\end{verbatim}
+
+The 2012 permit data from these states is at zero suggesting that there
+might have been a backlog of processing data that caused this. It could
+also indicate that there was input error in the data since having no
+permits in a year does seem like an aberration.
+
+     \#\# Conclusions
+
+    In conclusion, we were able to answer the questions posed at the
+introduction of this report albeit with some limitations. We found out
+that people are applying for long guns over handguns although that trend
+has minimally shifted recently with people seemingly preferring
+handguns. This could lead to an interesting discussion when it comes to
+manufacture and selling of the different types of weapons. People redeem
+more long guns over hand guns which again is congruent with our finding
+from the first question. It appears there is a slightly negative
+correlation between number of permits applied for and the percentage of
+people in those states with a college degree or above.
+
+Finally we can see that from 2017 data, Ohio has had the most growth in
+number of permit applications in the 5 year span between 2012 and 2017.
+
+I encountered a couple of limitations when doing my analysis. One was
+that I lacked a robust dataset of population data since the census only
+takes place every ten years and I was working population estimates from
+2016 to make my comparisons between the FBI database and the census
+database. A second issue I faced had to do with missing data points.
+When analysing the last question on states with the highest growth in
+permit applications, I found a lot of states that reported no permit
+applications. This seems strange and should warrant further
+investigation from the data source to ensure that integrity of the data
+we are working with is not being compromised since the lack of reported
+data in this section could cast doubt on the analysis conducted herein.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}

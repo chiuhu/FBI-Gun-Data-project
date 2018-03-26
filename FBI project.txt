@@ -1,0 +1,1 @@
+For this project, I referred a lot to stackoverflow for my research as well as the matplotlib, pandas and numpy websites to help me think through writing the dataframe commands
